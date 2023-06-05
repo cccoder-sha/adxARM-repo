@@ -1,0 +1,81 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "Clusters_learnadxcluster_name": {
+            "defaultValue": "learnadxcluster",
+            "type": "String"
+        },
+        "storageAccounts_jesseshastorage4_externalid": {
+            "defaultValue": "/subscriptions/2b20cd67-c920-4f7b-bff5-b949683124cf/resourceGroups/jesseRG/providers/Microsoft.Storage/storageAccounts/jesseshastorage4",
+            "type": "String"
+        }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "type": "Microsoft.Kusto/Clusters",
+            "apiVersion": "2022-12-29",
+            "name": "[parameters('Clusters_learnadxcluster_name')]",
+            "location": "West US 2",
+            "sku": {
+                "name": "Standard_E8a_v4",
+                "tier": "Standard",
+                "capacity": 4
+            },
+            "zones": [
+                "1",
+                "3",
+                "2"
+            ],
+            "identity": {
+                "type": "SystemAssigned"
+            },
+            "properties": {
+                "trustedExternalTenants": [],
+                "enableDiskEncryption": false,
+                "enableStreamingIngest": false,
+                "languageExtensions": {
+                    "value": []
+                },
+                "enablePurge": false,
+                "enableDoubleEncryption": false,
+                "engineType": "V3",
+                "acceptedAudiences": [],
+                "restrictOutboundNetworkAccess": "Disabled",
+                "allowedFqdnList": [],
+                "publicNetworkAccess": "Enabled",
+                "allowedIpRangeList": [],
+                "enableAutoStop": true,
+                "publicIPType": "IPv4"
+            }
+        },
+        {
+            "type": "Microsoft.Kusto/Clusters/ManagedPrivateEndpoints",
+            "apiVersion": "2022-12-29",
+            "name": "[concat(parameters('Clusters_learnadxcluster_name'), '/ARMMEP')]",
+            "location": "DummyLocation",
+            "dependsOn": [
+                "[resourceId('Microsoft.Kusto/Clusters', parameters('Clusters_learnadxcluster_name'))]"
+            ],
+            "properties": {
+                "privateLinkResourceId": "[parameters('storageAccounts_jesseshastorage4_externalid')]",
+                "groupId": "blob",
+                "requestMessage": "承認してください"
+            }
+        },
+        {
+            "type": "Microsoft.Kusto/Clusters/privateEndpointConnections",
+            "apiVersion": "2022-12-29",
+            "name": "[concat(parameters('Clusters_learnadxcluster_name'), '/', parameters('Clusters_learnadxcluster_name'), 'PE-d247acab-e812-4f76-826b-417f8177a487')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Kusto/Clusters', parameters('Clusters_learnadxcluster_name'))]"
+            ],
+            "properties": {
+                "privateLinkServiceConnectionState": {
+                    "status": "Approved"
+                }
+            }
+        }
+    ]
+}
