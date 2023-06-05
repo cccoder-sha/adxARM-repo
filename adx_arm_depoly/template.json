@@ -3,7 +3,7 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "Clusters_learnadxcluster_name": {
-            "defaultValue": "learnadxcluster",
+            "defaultValue": "adxarmdepo",
             "type": "String"
         },
         "storageAccounts_jesseshastorage4_externalid": {
