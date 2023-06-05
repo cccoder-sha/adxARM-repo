@@ -35,6 +35,12 @@
                 "trustedExternalTenants": [],
                 "enableDiskEncryption": false,
                 "enableStreamingIngest": false,
+                "optimizedAutoscale": {
+                    "version": 1,
+                    "isEnabled": true,
+                    "minimum": 4,
+                    "maximum": 4
+                },
                 "languageExtensions": {
                     "value": []
                 },
