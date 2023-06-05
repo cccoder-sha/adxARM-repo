@@ -63,19 +63,6 @@
                 "groupId": "blob",
                 "requestMessage": "承認してください"
             }
-        },
-        {
-            "type": "Microsoft.Kusto/Clusters/privateEndpointConnections",
-            "apiVersion": "2022-12-29",
-            "name": "[concat(parameters('Clusters_learnadxcluster_name'), '/', parameters('Clusters_learnadxcluster_name'), 'PE-d247acab-e812-4f76-826b-417f8177a487')]",
-            "dependsOn": [
-                "[resourceId('Microsoft.Kusto/Clusters', parameters('Clusters_learnadxcluster_name'))]"
-            ],
-            "properties": {
-                "privateLinkServiceConnectionState": {
-                    "status": "Approved"
-                }
-            }
         }
     ]
 }
