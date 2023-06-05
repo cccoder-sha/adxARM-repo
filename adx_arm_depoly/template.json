@@ -39,7 +39,7 @@
                     "version": 1,
                     "isEnabled": true,
                     "minimum": 4,
-                    "maximum": 4
+                    "maximum": 8
                 },
                 "languageExtensions": {
                     "value": []
